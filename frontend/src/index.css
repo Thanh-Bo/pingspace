@@ -1,0 +1,248 @@
+@import "tailwindcss";
+/* @import "@tailwindcss/animate"; */ /* Uncomment if you install @tailwindcss/animate */
+
+@layer base {
+  :root {
+    /* Minimalist Light Mode Variables (Light Background, Dark Text) */
+    --radius: 0.5rem; /* Slightly smaller radius for a sharper minimalist look */
+
+    /* Main Backgrounds */
+    --background: 0 0% 90%; /* Pure White for app background */
+    --container: 0 0% 98%; /* Very light gray for panels/cards/chat background */
+
+    /* Text Colors */
+    --foreground: 0 0% 9%; /* Near Black for general text */
+    --muted-foreground: 0 0% 45%; /* Medium gray for secondary text */
+
+    /* Chat Bubbles */
+    --sender: 210 90% 70%; /* A clean, modern blue for sender messages */
+    --sender-foreground: 0 0% 100%; /* White text on sender bubbles */
+    --receiver: 0 0% 100%; /* Pure White for receiver messages */
+    --receiver-foreground: 0 0% 9%; /* Near Black text on receiver bubbles */
+
+    /* Borders & Separators */
+    --border: 0 0% 89%; /* Light gray for subtle borders */
+    --divider: 0 0% 85%; /* Slightly more prominent for dividers */
+
+    /* Input Fields */
+    --input: 0 0% 100%; /* White input background */
+    --input-border: 0 0% 80%; /* Light gray input border */
+    --input-placeholder: 0 0% 60%; /* Medium gray placeholder text */
+
+    /* Hover States & Selection */
+    --chat-hover: 0 0% 70%; /* Very light gray for hover on chat items */
+    --chat-item-selected: 210 10% 90%; /* Subtle light blue for selected chat item */
+    --selection: 210 90% 70%; /* Lighter blue for text selection highlight */
+
+    /* Buttons & Accents */
+    --primary: 210 90% 45%; /* Main clean blue for primary actions */
+    --primary-foreground: 0 0% 100%; /* White text on primary buttons */
+    --secondary: 0 0% 90%; /* Light gray for secondary buttons */
+    --secondary-foreground: 0 0% 9%; /* Dark text on secondary buttons */
+    --destructive: 0 84% 60%; /* A clear red for destructive actions */
+    --destructive-foreground: 0 0% 100%; /* White text on destructive buttons */
+
+    /* Modals & Popovers */
+    --modal: 0 0% 100%; /* White for modal backgrounds */
+    --popover: 0 0% 100%; /* White for popovers/dropdowns */
+    --overlay: 0 0% 0% / 0.5; /* Black with 50% opacity for modals */
+
+    /* Icon Colors */
+    --icon: 0 0% 30%; /* Dark gray for general icons */
+    --icon-active: 210 90% 45%; /* Primary blue for active/accent icons */
+  }
+
+  .dark {
+    /* Minimalist Dark Mode Variables (Dark Background, Light Text) */
+    /* Radius remains consistent from :root */
+
+    /* Main Backgrounds */
+    --background: 0 0% 8%; /* Very dark gray/near black for app background */
+    --container: 0 0% 12%; /* Slightly lighter dark gray for panels/cards/chat background */
+
+    /* Text Colors */
+    --foreground: 0 0% 95%; /* Near White for general text */
+    --muted-foreground: 0 0% 60%; /* Medium light gray for secondary text */
+
+    /* Chat Bubbles */
+    --sender: 210 90% 40%; /* A darker, clean blue for sender messages */
+    --sender-foreground: 0 0% 100%; /* White text on sender bubbles */
+    --receiver: 0 0% 18%; /* Dark gray for receiver messages */
+    --receiver-foreground: 0 0% 95%; /* Near White text on receiver bubbles */
+
+    /* Borders & Separators */
+    --border: 0 0% 18%; /* Darker gray for subtle borders */
+    --divider: 0 0% 22%; /* Slightly more prominent for dividers */
+
+    /* Input Fields */
+    --input: 0 0% 15%; /* Dark gray input background */
+    --input-border: 0 0% 25%; /* Slightly lighter dark gray input border */
+    --input-placeholder: 0 0% 40%; /* Medium dark gray placeholder text */
+
+    /* Hover States & Selection */
+    --chat-hover: 0 0% 30%; /* Darker gray for hover on chat items */
+    --chat-item-selected: 210 10% 20%; /* Subtle dark blue for selected chat item */
+    --selection: 210 90% 25%; /* Darker blue for text selection highlight */
+
+    /* Buttons & Accents */
+    /* Main clean blue for primary actions */
+    --primary-foreground: 0 0% 100%; /* White text on primary buttons */
+    --secondary: 0 0% 15%; /* Dark gray for secondary buttons */
+    --secondary-foreground: 0 0% 95%; /* Light text on secondary buttons */
+    --destructive: 0 84% 50%; /* A clear red for destructive actions */
+    --destructive-foreground: 0 0% 100%; /* White text on destructive buttons */
+
+    /* Modals & Popovers */
+    --modal: 0 0% 15%; /* Dark gray for modal backgrounds */
+    --popover: 0 0% 15%; /* Dark gray for popovers/dropdowns */
+    --overlay: 0 0% 0% / 0.7; /* Black with 70% opacity for modals */
+
+    /* Icon Colors */
+    --icon: 0 0% 70%; /* Light gray for general icons */
+    --icon-active: 210 90% 30%; /* Primary blue for active/accent icons */
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    /* Removed the gradient for a minimalist look */
+    background: hsl(var(--background)); /* Ensure flat background */
+  }
+}
+
+@theme {
+  /* Radius definitions (consistent across themes) */
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Map CSS variables to Tailwind CSS custom properties */
+  --color-background: hsl(var(--background));
+  --color-container: hsl(var(--container));
+
+  --color-foreground: hsl(var(--foreground));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-sender: hsl(var(--sender));
+  --color-sender-foreground: hsl(var(--sender-foreground));
+  --color-receiver: hsl(var(--receiver));
+  --color-receiver-foreground: hsl(var(--receiver-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-divider: hsl(var(--divider));
+
+  --color-input: hsl(var(--input));
+  --color-input-border: hsl(var(--input-border));
+  --color-input-placeholder: hsl(var(--input-placeholder));
+
+  --color-chat-hover: hsl(var(--chat-hover));
+  --color-chat-item-selected: hsl(var(--chat-item-selected));
+  --color-selection: hsl(var(--selection));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-modal: hsl(var(--modal));
+  --color-popover: hsl(var(--popover));
+  --color-overlay: hsl(var(--overlay));
+
+  --color-icon: hsl(var(--icon));
+  --color-icon-active: hsl(var(--icon-active));
+}
+
+@layer components {
+  /* Custom Scrollbar for better aesthetics */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px; /* For horizontal scroll bars */
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--primary)); /* Primary color scrollbar thumb */
+    border-radius: 4px;
+    &:hover {
+      background-color: hsl(var(--primary-foreground)); /* Lighter on hover */
+    }
+  }
+  ::-webkit-scrollbar-track {
+    background-color: hsl(var(--container)); /* Matches container background */
+  }
+
+  /* Selection Styles (for text selection) */
+  ::selection {
+    background: hsl(var(--selection));
+    color: hsl(var(--foreground));
+  }
+
+  /* General Link Styles */
+  a {
+    color: hsl(var(--primary)); /* Primary color links */
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  /* Common Card/Panel Styles */
+  .card {
+    @apply bg-container border border-border rounded-lg shadow-sm; /* Use container color for panels */
+  }
+
+  /* Interactive Elements (e.g., buttons, clickable list items) */
+  .interactive-item {
+    @apply cursor-pointer transition-colors duration-200 ease-in-out;
+  }
+  .interactive-item:hover {
+    @apply bg-chat-hover;
+  }
+  .interactive-item.selected {
+    @apply bg-chat-item-selected;
+  }
+
+  /* Placeholder for potential header */
+  .app-header {
+    @apply bg-primary text-primary-foreground p-4 flex items-center justify-between shadow-md;
+  }
+
+  /* Placeholder for a message input area */
+  .message-input-area {
+    @apply p-3 bg-container border-t border-border flex items-center gap-2; /* Use container color */
+  }
+
+  /* Placeholder for a message bubble */
+  .message-bubble {
+    @apply p-2 rounded-lg max-w-[75%];
+    /* Simplified border-radius for minimalist look */
+    border-radius: var(--radius);
+  }
+  .message-bubble.sender {
+    @apply bg-sender text-sender-foreground ml-auto;
+    border-bottom-right-radius: calc(
+      var(--radius) / 2
+    ); /* Slightly less rounded on the 'tail' corner */
+  }
+  .message-bubble.receiver {
+    @apply bg-receiver text-receiver-foreground mr-auto;
+    border-bottom-left-radius: calc(
+      var(--radius) / 2
+    ); /* Slightly less rounded on the 'tail' corner */
+  }
+
+  /* Common dialog styles (if not already handled by your UI library) */
+  .dialog-content {
+    @apply bg-modal text-foreground rounded-xl shadow-xl p-6; /* More rounded dialogs */
+  }
+  .dialog-overlay {
+    @apply fixed inset-0 bg-overlay z-50 flex items-center justify-center;
+  }
+}
