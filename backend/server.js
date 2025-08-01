@@ -15,10 +15,37 @@ dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 
+// AFTER: The Correct Configuration
 app.use(
   helmet({
-    crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
-    crossOriginEmbedderPolicy: false, // This is often needed to prevent other issues
+    crossOriginEmbedderPolicy: false, // Keep this if needed
+    crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" }, // Keep this for popups
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        // Allow scripts from your domain, Google, and inline scripts (needed by Vite/React)
+        scriptSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "https://accounts.google.com",
+          "https://apis.google.com",
+        ],
+        // Allow styles from your domain and inline styles (needed by Tailwind/Vite)
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        // *** THIS IS THE FIX FOR YOUR IMAGE PROBLEM ***
+        imgSrc: ["'self'", "data:", "https://res.cloudinary.com"],
+        // Allow connections to your own server (including WebSockets)
+        // IMPORTANT: Replace 'https://your-deployed-app.com' with your actual production URL
+        connectSrc: [
+          "'self'",
+          "http://localhost:5000",
+          "ws://localhost:5000",
+          "wss://https://pingspace.onrender.com",
+        ],
+        // Allow Google Sign-In to open its iframe
+        frameSrc: ["'self'", "https://accounts.google.com"],
+      },
+    },
   })
 );
 
