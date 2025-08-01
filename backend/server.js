@@ -35,6 +35,21 @@ app.use(
     credentials: true,
   })
 );
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "https://accounts.google.com",
+          "https://apis.google.com",
+        ],
+      },
+    },
+  })
+);
 app.use("/api/auth", authRoutes);
 app.use("/api/message", messageRoutes);
 app.use("/api/group", groupRoutes);
