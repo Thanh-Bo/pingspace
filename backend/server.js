@@ -23,7 +23,7 @@ app.use(
 );
 
 const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, "client/dist")));
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 app.use(cookieParser());
 app.use(express.json({ limit: "50mb" })); // or any size you need
@@ -42,7 +42,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/request", requestRoutes);
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client/dist", "index.html"));
+  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
 });
 server.listen(PORT, () => {
   connectDB();
