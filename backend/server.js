@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import helmet from "helmet";
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
 import groupRoutes from "./routes/group.route.js";
@@ -35,21 +34,7 @@ app.use(
     credentials: true,
   })
 );
-app.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          "https://accounts.google.com",
-          "https://apis.google.com",
-        ],
-      },
-    },
-  })
-);
+
 app.use("/api/auth", authRoutes);
 app.use("/api/message", messageRoutes);
 app.use("/api/group", groupRoutes);
