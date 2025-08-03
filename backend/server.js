@@ -40,7 +40,7 @@ app.use(
           "'self'",
           "http://localhost:5000",
           "ws://localhost:5000",
-          "wss://https://pingspace.onrender.com",
+          "wss://pingspace.onrender.com",
         ],
         // Allow Google Sign-In to open its iframe
         frameSrc: ["'self'", "https://accounts.google.com"],
@@ -58,7 +58,7 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://pingspace.onrender.com"],
     credentials: true,
   })
 );
