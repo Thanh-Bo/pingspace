@@ -4,7 +4,10 @@ import toast from "react-hot-toast";
 import { create } from "zustand";
 import { io, Socket } from "socket.io-client";
 
-const SOCKET_URL = "http://localhost:5000";
+const SOCKET_URL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:5000"
+    : "https://pingspace.onrender.com";
 export interface User {
   _id: string;
   email: string;
