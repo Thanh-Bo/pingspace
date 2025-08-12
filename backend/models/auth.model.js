@@ -29,7 +29,6 @@ const userSchema = new mongoose.Schema(
     bio: {
       type: String,
       default: "",
-      maxlength: 500,
     },
     gender: {
       type: String,
@@ -47,6 +46,13 @@ const userSchema = new mongoose.Schema(
     googleId: {
       type: String,
     },
+    likedPosts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+        default: [],
+      },
+    ],
   },
   { timestamps: true }
 );

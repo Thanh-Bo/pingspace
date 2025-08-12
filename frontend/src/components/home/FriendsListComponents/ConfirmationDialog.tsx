@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { DialogHeader } from "@/components/ui/dialog";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogHeader,
   DialogOverlay,
   DialogTitle,
-} from "@radix-ui/react-dialog";
+} from "@/components/ui/dialog";
 
 interface ConfirmationDialogProps {
   isOpen: boolean;

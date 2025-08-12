@@ -7,6 +7,8 @@ import messageRoutes from "./routes/message.route.js";
 import groupRoutes from "./routes/group.route.js";
 import userRoutes from "./routes/user.route.js";
 import requestRoutes from "./routes/request.route.js";
+import postRoutes from "./routes/post.route.js";
+import notificationRoutes from "./routes/notification.route.js";
 import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser";
 import { app, server } from "./lib/socket.js";
@@ -68,6 +70,8 @@ app.use("/api/message", messageRoutes);
 app.use("/api/group", groupRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/request", requestRoutes);
+app.use("/api/post", postRoutes);
+app.use("/api/notification", notificationRoutes);
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));

@@ -17,6 +17,7 @@ import toast from "react-hot-toast";
 import { Pencil } from "lucide-react";
 import { Chat, useChatStore, User } from "@/store/useChatStore";
 import { useRequestStore } from "@/store/useRequestStore";
+import { Link, useNavigate } from "react-router-dom";
 
 interface ProfileDialogProps {
   isOpen: boolean;
@@ -42,7 +43,6 @@ const ProfileDialog = ({
   const [isUpdatingCoverImg, setIsUpdatingCoverImage] = useState(false);
   // If displayUser prop is provided , use that .
   const userData = displayUser || authUser;
-  console.log("ProfileDialog displayUser:", displayUser);
   // Check if this is my profile or not
   const isOwnProfile = authUser?._id === userData?._id;
 
@@ -62,6 +62,7 @@ const ProfileDialog = ({
     isCancellingRequest,
   } = useRequestStore();
 
+  const navigate = useNavigate();
   // Determine relationship status
   // Are we already fiends
   const isFriend = isOwnProfile
@@ -147,7 +148,7 @@ const ProfileDialog = ({
       bio: undefined,
       dateOfBirth: userData?.dateOfBirth?.toString(),
       gender: undefined,
-      updatedAt: userData?.updatedAt,
+
       isOnline: undefined,
     };
     setSelectedChat(navigateChat);
@@ -155,6 +156,7 @@ const ProfileDialog = ({
     if (closeAllDialog) {
       closeAllDialog();
     }
+    navigate("/");
   };
 
   if (!userData) {
@@ -223,18 +225,7 @@ const ProfileDialog = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogTrigger asChild>
-        {/* {isOwnProfile && (
-          <div className="cursor-pointer">
-            <Avatar>
-              <AvatarImage src={authUser?.profilePic || "pingspace.png"} />
-              <AvatarFallback>
-                {authUser?.fullName?.charAt(0) || "U"}
-              </AvatarFallback>
-            </Avatar>
-          </div>
-        )} */}
-      </DialogTrigger>
+      <DialogTrigger asChild></DialogTrigger>
       <DialogContent className="max-w-md p-0 ">
         <DialogHeader>
           <DialogTitle className="flex justify-between items-center text-xl font-semibold px-4 pt-4">
@@ -384,6 +375,13 @@ const ProfileDialog = ({
                     ? new Date(userData.dateOfBirth).toLocaleDateString("en-GB")
                     : "Not set"}
                 </p>
+                <Link
+                  className="font-bold text-sm"
+                  to={`/profile/${userData._id}`}
+                  onClick={closeAllDialog || onClose}
+                >
+                  See full profile
+                </Link>
               </div>
             </div>
 

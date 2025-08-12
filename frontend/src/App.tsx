@@ -2,8 +2,8 @@ import {
   Navigate,
   Route,
   Routes,
-  useLocation,
-  useNavigate,
+  // useLocation,
+  // useNavigate,
 } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { SignupPage } from "./components/pages/SignupPage";
@@ -13,7 +13,11 @@ import { useAuthStore } from "./store/useAuthStore";
 import { useEffect } from "react";
 import FriendPage from "./components/pages/FriendPage";
 import SideBarPage from "./components/SideBarPage";
-import { useChatStore } from "./store/useChatStore";
+// import { useChatStore } from "./store/useChatStore";
+import PostPage from "./components/pages/PostPage";
+import NotificationPage from "./components/pages/NotificationPage";
+import ChatBoxPage from "./components/pages/ChatBoxPage";
+import ProfilePage from "./components/pages/ProfilePage";
 function App() {
   const {
     authUser,
@@ -21,24 +25,24 @@ function App() {
     checkAuth,
     isRightPanelFullScreenOnMobile,
   } = useAuthStore();
-  const { selectedChat, setSelectedChat } = useChatStore();
-  const navigate = useNavigate();
-  const location = useLocation();
+  // const { selectedChat, setSelectedChat } = useChatStore();
+  // const navigate = useNavigate();
+  // const location = useLocation();
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
 
-  useEffect(() => {
-    if (selectedChat && location.pathname !== "/") {
-      navigate("/");
-    }
-  }, [selectedChat, location.pathname, navigate]);
+  // useEffect(() => {
+  //   if (selectedChat && location.pathname !== "/") {
+  //     navigate("/");
+  //   }
+  // }, [selectedChat, location.pathname, navigate]);
 
-  useEffect(() => {
-    if (location.pathname === "/friends") {
-      setSelectedChat(null);
-    }
-  }, [location.pathname, setSelectedChat]);
+  // useEffect(() => {
+  //   if (location.pathname === "/friends") {
+  //     setSelectedChat(null);
+  //   }
+  // }, [location.pathname, setSelectedChat]);
   if (isCheckingAuth && !authUser) {
     return <h1>Loading...</h1>;
   }
@@ -47,7 +51,7 @@ function App() {
     <main className="flex h-screen overflow-hidden bg-container ">
       {authUser && (
         <div
-          className={`w-16 flex-shrink-0 h-full    border border-l border-t border-b  flex justify-center pr-3
+          className={`w-50 flex-shrink-0 h-full    border border-l border-t border-b  flex justify-center pr-3
           ${isRightPanelFullScreenOnMobile ? "hidden" : "flex"} 
          md:flex  `}
         >
@@ -76,6 +80,24 @@ function App() {
             <Route
               path="/friends"
               element={authUser ? <FriendPage /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/post"
+              element={authUser ? <PostPage /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/notification"
+              element={
+                authUser ? <NotificationPage /> : <Navigate to="/login" />
+              }
+            />
+            <Route
+              path="/profile/:id"
+              element={authUser ? <ProfilePage /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/chatBox"
+              element={authUser ? <ChatBoxPage /> : <Navigate to="/login" />}
             />
           </Routes>
         </div>

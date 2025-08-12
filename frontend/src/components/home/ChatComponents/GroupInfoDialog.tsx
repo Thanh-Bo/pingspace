@@ -220,23 +220,26 @@ const GroupInfoDialog = ({
                     src={group.groupImage || "/pingspace.png"}
                     className="object-cover"
                   />
+                  <div
+                    className="absolute bottom-2 right-0 rounded-full p-2 bg-gray-800/80 cursor-pointer hover:bg-gray-700 transition duration-200"
+                    onClick={() =>
+                      !isUpdatingImage && groupImgRef.current?.click()
+                    }
+                  >
+                    {isUpdatingImage ? (
+                      <span className="animate-spin text-white">
+                        Updating...
+                      </span>
+                    ) : (
+                      <Pencil className="size-5 text-white" />
+                    )}
+                  </div>
                   <AvatarFallback>
                     <div className="animate-pulse bg-gray-tertiary w-full h-full rounded-full" />
                   </AvatarFallback>
                 </Avatar>
                 {/* Update Group Image  */}
-                <div
-                  className="absolute bottom-2 right-2 rounded-full p-2 bg-gray-800/80 cursor-pointer hover:bg-gray-700 transition duration-200"
-                  onClick={() =>
-                    !isUpdatingImage && groupImgRef.current?.click()
-                  }
-                >
-                  {isUpdatingImage ? (
-                    <span className="animate-spin text-white">Updating...</span>
-                  ) : (
-                    <Pencil className="size-5 text-white" />
-                  )}
-                </div>
+
                 <input
                   type="file"
                   hidden

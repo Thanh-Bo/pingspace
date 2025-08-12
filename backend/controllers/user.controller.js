@@ -5,7 +5,10 @@ import { getReceiverSocketId, io } from "../lib/socket.js";
 export const getUserProfile = async (req, res) => {
   const { id } = req.params;
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id)
+      .select("-password")
+      .populate({ path: "friends", select: "_id fullName profilePic" })
+      .lean();
     if (!user) return res.status(404).json({ error: "User not found" });
     res.status(200).json(user);
   } catch (error) {
@@ -196,5 +199,37 @@ export const getAllUsers = async (req, res) => {
     console.error("Error in getAllUsers controller:", error.message);
     // Send a 500 Internal Server Error response
     res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+export const setSuggestedUsers = async (req, res) => {
+  try {
+    /// current user id
+    const userId = req.user._id;
+    // find current user following
+    const userFriends = await User.findById(userId).select("friends");
+    // find random user (excluding current user)
+    const users = await User.aggregate([
+      {
+        $match: {
+          _id: { $ne: userId },
+        },
+      },
+      {
+        $sample: { size: 10 },
+      },
+    ]);
+    // Filter out users the current user is already following
+    const filteredUsers = users.filter(
+      (user) => !userFriends.friends.includes(user._id)
+    );
+
+    const suggestedUsers = filteredUsers.slice(0, 10);
+
+    suggestedUsers.forEach((user) => (user.password = null));
+
+    res.status(200).json(suggestedUsers);
+  } catch (error) {
+    console.log("Error in getSuggestedUsers: ", error.message);
+    res.status(500).json({ error: error.message });
   }
 };
