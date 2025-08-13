@@ -104,15 +104,15 @@ const PostCard = ({ post, onImageClick }: PostCardProps) => {
             <span>{post.text}</span>
             {post.img && (
               <img
-                src={post.img}
+                src={post.img || ""}
                 className="h-80 object-contain rounded-lg border border-gray-700"
-                onClick={() => onImageClick(post.img)}
+                onClick={() => onImageClick(post.img || "")}
                 alt=""
               />
             )}
             {post.video && (
               <video
-                src={post.video}
+                src={post.video || ""}
                 className="h-80 object-contain rounded-lg border border-gray-700"
                 controls
                 muted

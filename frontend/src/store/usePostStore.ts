@@ -142,11 +142,19 @@ export const usePostStore = create<PostStore>((set) => ({
     set({ isLikingPost: true });
     try {
       const { data } = await axiosInstance.post(`/post/like/${postId}`);
-      set((state) => ({
-        posts: state.posts.map((post) =>
-          post._id === postId ? { ...post, likes: data.updatedLikes } : post
-        ),
-      }));
+      set((state) => {
+        const updateLikes = (arr: Post[]) =>
+          arr.map((post) =>
+            post._id === postId ? { ...post, likes: data.updatedLikes } : post
+          );
+
+        return {
+          posts: updateLikes(state.posts),
+          likedPosts: updateLikes(state.likedPosts),
+          userPosts: updateLikes(state.userPosts),
+          allFriendPost: updateLikes(state.allFriendPost),
+        };
+      });
     } catch (error) {
       console.error("Error like / unlike post:", error);
       toast.error("Failed to update like status");

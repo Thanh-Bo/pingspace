@@ -16,6 +16,7 @@ interface Notification {
 }
 
 interface NotificationStore {
+  unreadCount: number;
   notifications: Notification[];
   isFetchingNotification: boolean;
   isDeletingNotification: boolean;
@@ -27,6 +28,7 @@ interface NotificationStore {
 
 export const useNotificationStore = create<NotificationStore>((set, get) => ({
   notifications: [],
+  unreadCount: 0,
   isFetchingNotification: false,
   isDeletingNotification: false,
   isDeletingAllNotification: false,
@@ -34,10 +36,11 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
   // Fetch all notifications
   fetchNotifications: async () => {
     try {
-      set({ isFetchingNotification: true });
-      const res = await axiosInstance.get<Notification[]>("/notification");
-      console.log("Fetched notifications:", res.data);
-      set({ notifications: res.data });
+      const res = await axiosInstance.get("/notification");
+      set({
+        notifications: res.data.notifications,
+        unreadCount: res.data.unreadCount,
+      });
     } catch (error) {
       console.error("Error fetching notifications:", error);
     } finally {

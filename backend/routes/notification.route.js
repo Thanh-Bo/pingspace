@@ -11,5 +11,4 @@ const router = express.Router();
 router.get("/", protectRoute, getNotifications);
 router.delete("/", protectRoute, deleteAllNotifications);
 router.delete("/:id", protectRoute, deleteNotificationsById);
-
 export default router;

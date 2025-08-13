@@ -2,8 +2,8 @@ import {
   Navigate,
   Route,
   Routes,
-  // useLocation,
-  // useNavigate,
+  useLocation,
+  useNavigate,
 } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { SignupPage } from "./components/pages/SignupPage";
@@ -13,11 +13,12 @@ import { useAuthStore } from "./store/useAuthStore";
 import { useEffect } from "react";
 import FriendPage from "./components/pages/FriendPage";
 import SideBarPage from "./components/SideBarPage";
-// import { useChatStore } from "./store/useChatStore";
 import PostPage from "./components/pages/PostPage";
 import NotificationPage from "./components/pages/NotificationPage";
 import ChatBoxPage from "./components/pages/ChatBoxPage";
 import ProfilePage from "./components/pages/ProfilePage";
+import { Button } from "./components/ui/button";
+import { ArrowLeft } from "lucide-react";
 function App() {
   const {
     authUser,
@@ -25,27 +26,27 @@ function App() {
     checkAuth,
     isRightPanelFullScreenOnMobile,
   } = useAuthStore();
-  // const { selectedChat, setSelectedChat } = useChatStore();
-  // const navigate = useNavigate();
-  // const location = useLocation();
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
 
-  // useEffect(() => {
-  //   if (selectedChat && location.pathname !== "/") {
-  //     navigate("/");
-  //   }
-  // }, [selectedChat, location.pathname, navigate]);
-
-  // useEffect(() => {
-  //   if (location.pathname === "/friends") {
-  //     setSelectedChat(null);
-  //   }
-  // }, [location.pathname, setSelectedChat]);
   if (isCheckingAuth && !authUser) {
     return <h1>Loading...</h1>;
   }
+  // Pages that should hide the sidebar on < 1024px
+  const fullWidthPages = ["/post", "/notification"];
+  const isProfilePage = location.pathname.startsWith("/profile/");
+  const isFullWidth =
+    fullWidthPages.includes(location.pathname) || isProfilePage;
+
+  let backLabel = "Back";
+  if (location.pathname === "/post") backLabel = "Post";
+  else if (location.pathname === "/notification") backLabel = "Notification";
+  else if (isProfilePage) backLabel = "Profile";
 
   return (
     <main className="flex h-screen overflow-hidden bg-container ">
@@ -53,7 +54,8 @@ function App() {
         <div
           className={`w-50 flex-shrink-0 h-full    border border-l border-t border-b  flex justify-center pr-3
           ${isRightPanelFullScreenOnMobile ? "hidden" : "flex"} 
-         md:flex  `}
+         md:flex  
+          ${isFullWidth ? "hidden " : "flex"} `}
         >
           <SideBarPage />
         </div>
@@ -62,7 +64,20 @@ function App() {
         {" "}
         {/* flex-col for vertical content on pages */}
         <div className="max-w-[1700px] mx-auto w-full h-full flex flex-col">
-          {" "}
+          {/* Back button only on full-width mobile view */}
+          {isFullWidth && (
+            <div className="md:hidden flex items-center p-3 border-b border-border">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden mr-2 text-foreground hover:bg-chat-hover"
+                onClick={() => navigate(-1)}
+              >
+                <ArrowLeft size={20} />
+              </Button>
+              <span className="font-medium md:hidden">{backLabel}</span>
+            </div>
+          )}
           {/* New wrapper for max-width */}
           <Routes>
             <Route

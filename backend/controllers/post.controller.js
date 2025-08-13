@@ -1,3 +1,4 @@
+import { getReceiverSocketId, io } from "../lib/socket.js";
 import User from "../models/auth.model.js";
 import Notification from "../models/notification.model.js";
 import Post from "../models/post.model.js";
@@ -100,12 +101,25 @@ export const commentOnPost = async (req, res) => {
       .populate({ path: "user", select: "fullName profilePic" })
       .populate({ path: "comments.user", select: "fullName profilePic" });
 
-    const notification = new Notification({
-      from: userId,
-      to: post.user,
-      type: "comment",
-    });
-    await notification.save();
+    if (userId.toString() !== post.user.toString()) {
+      const notification = new Notification({
+        from: userId,
+        to: post.user,
+        type: "comment",
+      });
+
+      await notification.save();
+
+      // Emit socket event if post owner is online
+      const receiverSocketId = getReceiverSocketId(post.user.toString());
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit("newNotification", {
+          from: userId,
+          type: "comment",
+        });
+      }
+    }
+
     res.status(200).json(populatedPost);
   } catch (error) {
     console.log("Error in commentOnPost controller: ", error);
@@ -152,7 +166,6 @@ export const likeUnlikePost = async (req, res) => {
       await Post.updateOne({ _id: postId }, { $pull: { likes: userId } });
       await User.updateOne({ _id: userId }, { $pull: { likedPosts: postId } });
       // Satisfy the condition id.toString() !== userId.toString()
-      // If not . Cook !
       const updatedLikes = post.likes.filter(
         (id) => id.toString() !== userId.toString()
       );
@@ -166,14 +179,25 @@ export const likeUnlikePost = async (req, res) => {
       Liked = true;
       await post.save();
 
-      const notification = new Notification({
-        from: userId,
-        to: post.user,
-        type: "like",
-      });
-      await notification.save();
+      if (userId.toString() !== post.user.toString()) {
+        const notification = new Notification({
+          from: userId,
+          to: post.user,
+          type: "like",
+        });
+
+        await notification.save();
+      }
 
       const updatedLikes = post.likes;
+      // Emit socket event if the post owner is online
+      const receiverSocketId = getReceiverSocketId(post.user.toString());
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit("newNotification", {
+          from: userId,
+          type: "like",
+        });
+      }
       res
         .status(200)
         .json({ message: "Like successfully", updatedLikes, Liked: true });

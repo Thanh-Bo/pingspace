@@ -29,8 +29,11 @@ const SideBarPage = () => {
     { to: "/", icon: <MessageCircle />, label: "Home" },
     { to: "/friends", icon: <Contact />, label: "Friend Lists" },
     { to: "/post", icon: <Newspaper />, label: "Post" },
-    { to: "/notification", icon: <Bell />, label: "Notification" },
-    // { to: "/chatBox", icon: <Bot />, label: "Chat Box" },
+    {
+      to: "/notification",
+      icon: <Bell />,
+      label: "Notification",
+    },
     {
       to: `/profile/${authUser?._id}`,
       icon: <FaUser />,
@@ -42,7 +45,7 @@ const SideBarPage = () => {
     <div className="h-full flex flex-col">
       <div className="sticky top-0 left-0 h-full flex flex-col w-full">
         <ul className="flex flex-col gap-3 mt-4 ml-3">
-          {/* Profile */}
+          {/* Profile Dialog */}
           <li>
             <div
               onClick={() => setIsOpen(true)}
@@ -72,6 +75,7 @@ const SideBarPage = () => {
                   }`}
               >
                 {icon}
+
                 <span>{label}</span>
               </Link>
             </li>

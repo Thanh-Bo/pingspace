@@ -26,7 +26,7 @@ const CreatePost = () => {
   const { createPost, isCreatingPost } = usePostStore();
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await createPost(text, img, video);
+    await createPost(text, img ?? undefined, video ?? undefined);
     setText("");
     setImg(null);
     setVideo(null);

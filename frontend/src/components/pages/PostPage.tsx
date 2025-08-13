@@ -15,7 +15,7 @@ const HomePage = () => {
         </div>
 
         <div
-          className="w-full md:w-1/6 h-full 
+          className=" md:w-1/6 h-full 
            flex"
         >
           <RightPanel />
