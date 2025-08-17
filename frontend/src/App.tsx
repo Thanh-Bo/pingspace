@@ -52,7 +52,7 @@ function App() {
     <main className="flex h-screen overflow-hidden bg-container ">
       {authUser && (
         <div
-          className={`w-50 flex-shrink-0 h-full    border border-l border-t border-b  flex justify-center pr-3
+          className={` w-15 lg:w-50 flex-shrink-0 h-full    border border-l border-t border-b  flex justify-center pr-3
           ${isRightPanelFullScreenOnMobile ? "hidden" : "flex"} 
          md:flex  
           ${isFullWidth ? "hidden " : "flex"} `}

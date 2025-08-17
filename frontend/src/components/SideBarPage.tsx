@@ -43,7 +43,7 @@ const SideBarPage = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="sticky top-0 left-0 h-full flex flex-col w-full">
+      <div className="sticky top-0 left-0 h-full flex flex-col  ">
         <ul className="flex flex-col gap-3 mt-4 ml-3">
           {/* Profile Dialog */}
           <li>
@@ -57,7 +57,9 @@ const SideBarPage = () => {
                   {authUser?.fullName?.charAt(0) || "U"}
                 </AvatarFallback>
               </Avatar>
-              <span className="text-xl font-medium">{authUser?.fullName}</span>
+              <span className="text-xl font-medium lg:block hidden">
+                {authUser?.fullName}
+              </span>
             </div>
             <ProfileDialog isOpen={isOpen} onClose={() => setIsOpen(false)} />
           </li>
@@ -67,7 +69,10 @@ const SideBarPage = () => {
             <li key={to}>
               <Link
                 to={to}
-                className={`flex items-center gap-x-4 hover:bg-chat-hover transition-all rounded-full duration-300 py-2 pl-4 pr-4 text-xl
+                className={`flex items-center 
+              gap-x-2 lg:gap-x-4   
+              hover:bg-chat-hover transition-all rounded-full duration-300 
+              py-2 pl-2 pr-2 lg:pl-4 lg:pr-4 text-xl
                   ${
                     isActive(to)
                       ? "text-primary bg-chat-item-selected"
@@ -76,7 +81,7 @@ const SideBarPage = () => {
               >
                 {icon}
 
-                <span>{label}</span>
+                <span className="lg:block hidden">{label}</span>
               </Link>
             </li>
           ))}
@@ -87,7 +92,7 @@ const SideBarPage = () => {
               <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
                 <ModeToggle />
               </ThemeProvider>
-              <span>Theme</span>
+              <span className="lg:block hidden">Theme</span>
             </div>
           </li>
           <li>
@@ -96,7 +101,7 @@ const SideBarPage = () => {
               onClick={handleLogout}
             >
               <LogOut className="w-6 h-6" />
-              <span className="text-xl">Logout</span>
+              <span className="text-xl lg:block hidden">Logout</span>
             </div>
           </li>
         </ul>
