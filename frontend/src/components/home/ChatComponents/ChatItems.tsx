@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 import { ImageIcon, Users, VideoIcon } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { Chat, Message, useChatStore } from "@/store/useChatStore";
-import { User } from "@/store/useAuthStore";
+import { User, useAuthStore } from "@/store/useAuthStore";
 
 interface ChatItemsProps {
   chat: Chat;
@@ -13,6 +13,7 @@ interface ChatItemsProps {
 
 const ChatItems = ({ chat, authUser, onClick }: ChatItemsProps) => {
   const { selectedChat } = useChatStore();
+  const { onlineUsers } = useAuthStore();
   // Determine message type for display (basic heuristic, improve if API provides explicit type)
   const lastMessage = chat.lastMessage as Message | null;
   const lastMessageType = lastMessage?.image
@@ -25,10 +26,13 @@ const ChatItems = ({ chat, authUser, onClick }: ChatItemsProps) => {
   const itemClass = `flex gap-2 items-center p-3 hover:bg-chat-hover cursor-pointer w-full h-25 ${
     isSelected ? "bg-chat-item-selected" : ""
   }`;
+  
+  const isOnline = !chat.isGroup && onlineUsers.includes(chat._id);
+
   return (
     <>
       <div className={itemClass} onClick={onClick}>
-        <Avatar className="border  overflow-visible relative">
+        <Avatar className="border overflow-visible relative">
           <AvatarImage
             src={
               chat.isGroup
@@ -40,6 +44,9 @@ const ChatItems = ({ chat, authUser, onClick }: ChatItemsProps) => {
           <AvatarFallback>
             <div className="animate-pulse bg-gray-tertiary w-full h-full rounded-full"></div>
           </AvatarFallback>
+          {isOnline && (
+            <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-500 ring-2 ring-background z-10" />
+          )}
         </Avatar>
         <div className="w-full">
           <div className="flex items-center">
@@ -74,7 +81,7 @@ const ChatItems = ({ chat, authUser, onClick }: ChatItemsProps) => {
           </p>
         </div>
       </div>
-      <hr className="h-[1px] mx-10 bg-divider" />
+      <hr className="border-none h-[1px] mx-10 bg-divider" />
     </>
   );
 };

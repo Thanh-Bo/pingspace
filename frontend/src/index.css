@@ -30,7 +30,7 @@
     --input-placeholder: 0 0% 60%; /* Medium gray placeholder text */
 
     /* Hover States & Selection */
-    --chat-hover: 0 0% 70%; /* Very light gray for hover on chat items */
+    --chat-hover: 0 0% 95%; /* Very light gray for hover on chat items */
     --chat-item-selected: 210 10% 90%; /* Subtle light blue for selected chat item */
     --selection: 210 90% 70%; /* Lighter blue for text selection highlight */
 
@@ -80,12 +80,12 @@
     --input-placeholder: 0 0% 40%; /* Medium dark gray placeholder text */
 
     /* Hover States & Selection */
-    --chat-hover: 0 0% 30%; /* Darker gray for hover on chat items */
+    --chat-hover: 0 0% 18%; /* Darker gray for hover on chat items */
     --chat-item-selected: 210 10% 20%; /* Subtle dark blue for selected chat item */
     --selection: 210 90% 25%; /* Darker blue for text selection highlight */
 
     /* Buttons & Accents */
-    /* Main clean blue for primary actions */
+    --primary: 210 90% 50%; /* Main clean blue for primary actions */
     --primary-foreground: 0 0% 100%; /* White text on primary buttons */
     --secondary: 0 0% 15%; /* Dark gray for secondary buttons */
     --secondary-foreground: 0 0% 95%; /* Light text on secondary buttons */
@@ -99,7 +99,7 @@
 
     /* Icon Colors */
     --icon: 0 0% 70%; /* Light gray for general icons */
-    --icon-active: 210 90% 30%; /* Primary blue for active/accent icons */
+    --icon-active: 210 90% 65%; /* Primary blue for active/accent icons */
   }
 
   * {

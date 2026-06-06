@@ -389,7 +389,7 @@ const Profile = () => {
                     onClick={handleRemoveFriend}
                     disabled={isRemovingFriend}
                   >
-                    {isSendingRequest ? "Removing..." : "Remove Friend"}
+                    {isRemovingFriend ? "Removing..." : "Remove Friend"}
                   </Button>
                 )}
                 {/* Chat */}

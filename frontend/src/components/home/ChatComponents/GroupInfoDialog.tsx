@@ -87,16 +87,15 @@ const GroupInfoDialog = ({
       console.error("No group ID available to leave");
       return;
     }
-    if (window.confirm(`Are you sure you want to leave ${group.groupName}?`)) {
-      try {
-        await leaveGroup(group._id); // Assuming leaveGroup action
-        toast.success(`You have left ${group.groupName}`);
-        setSelectedChat(null); // Deselect chat after leaving
-        onClose(); // Close the dialog
-      } catch (error) {
-        console.error("Failed to leave group:", error);
-        toast.error("Failed to leave group");
-      }
+    try {
+      await leaveGroup(group._id); // Assuming leaveGroup action
+      toast.success(`You have left ${group.groupName}`);
+      setSelectedChat(null); // Deselect chat after leaving
+      setIsLeaveDialogOpen(false); // Close the leave confirmation dialog
+      onClose(); // Close the main info dialog
+    } catch (error) {
+      console.error("Failed to leave group:", error);
+      toast.error("Failed to leave group");
     }
   };
 
@@ -280,7 +279,7 @@ const GroupInfoDialog = ({
               {!isAdmin && (
                 <div
                   className="flex items-center gap-4 cursor-pointer hover:bg-chat-hover text-red-600 p-2 rounded-md "
-                  onClick={handleLeaveGroup}
+                  onClick={() => setIsLeaveDialogOpen(true)}
                 >
                   <LogOut size={20} />
                   <p className="text-sm font-medium">Leave Group</p>

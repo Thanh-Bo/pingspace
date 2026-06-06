@@ -36,7 +36,7 @@ const RightPanelChat = ({
     subscribeFromMessage,
     unsubscribeFromMessage,
   } = useChatStore();
-  const { authUser, isCheckingAuth, getUserProfile } = useAuthStore();
+  const { authUser, isCheckingAuth, getUserProfile, onlineUsers } = useAuthStore();
   const { updateGroupName, fetchUserGroup, selectedGroup } = useGroupStore();
   // State for group name update dialog
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -139,19 +139,24 @@ const RightPanelChat = ({
               <ArrowLeft size={20} />
             </Button>
             {/* Avatar */}
-            <Avatar className="cursor-pointer" onClick={handleAvatarClick}>
-              <AvatarImage
-                src={
-                  selectedChat.isGroup
-                    ? selectedChat.groupImage || "/avatar.png"
-                    : selectedChat.profilePic || "/avatar.png"
-                }
-                className="object-cover"
-              />
-              <AvatarFallback>
-                <div className="animate-pulse bg-gray-tertiary w-full h-full rounded-full" />
-              </AvatarFallback>
-            </Avatar>
+            <div className="relative">
+              <Avatar className="cursor-pointer" onClick={handleAvatarClick}>
+                <AvatarImage
+                  src={
+                    selectedChat.isGroup
+                      ? selectedChat.groupImage || "/avatar.png"
+                      : selectedChat.profilePic || "/avatar.png"
+                  }
+                  className="object-cover"
+                />
+                <AvatarFallback>
+                  <div className="animate-pulse bg-gray-tertiary w-full h-full rounded-full" />
+                </AvatarFallback>
+              </Avatar>
+              {!selectedChat.isGroup && onlineUsers.includes(selectedChat._id) && (
+                <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-500 ring-2 ring-background z-10" />
+              )}
+            </div>
             {/* Name Group */}
             <div className="flex flex-col gap-1">
               <div className="flex gap-3">
@@ -173,13 +178,21 @@ const RightPanelChat = ({
                   </button>
                 )}
               </div>
-              {selectedChat.isGroup && (
+              {selectedChat.isGroup ? (
                 <button
                   className="text-xs text-muted-foreground text-left hover:underline" // Make it look like a link
                   onClick={handleSeeMembersClick} // Opens GroupMembersDialog
                 >
                   See members
                 </button>
+              ) : (
+                <span className="text-xs text-muted-foreground text-left flex items-center gap-1">
+                  {onlineUsers.includes(selectedChat._id) ? (
+                    <span className="text-green-500 font-medium">Online</span>
+                  ) : (
+                    <span>Offline</span>
+                  )}
+                </span>
               )}
             </div>
           </div>

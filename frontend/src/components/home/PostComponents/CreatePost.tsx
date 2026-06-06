@@ -1,6 +1,6 @@
 import { CiImageOn } from "react-icons/ci";
 import { BsEmojiSmileFill } from "react-icons/bs";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 
 import EmojiPicker, { EmojiClickData, Theme } from "emoji-picker-react";
@@ -24,8 +24,26 @@ const CreatePost = () => {
 
   const imgRef = useRef<HTMLInputElement | null>(null);
   const videoRef = useRef<HTMLInputElement | null>(null);
+  const emojiPickerRef = useRef<HTMLDivElement>(null);
 
   const { createPost, isCreatingPost } = usePostStore();
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        emojiPickerRef.current &&
+        !emojiPickerRef.current.contains(event.target as Node)
+      ) {
+        setShowEmojiPicker(false);
+      }
+    };
+    if (showEmojiPicker) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showEmojiPicker]);
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     await createPost(text, img ?? undefined, video ?? undefined);
@@ -144,24 +162,27 @@ const CreatePost = () => {
               onClick={() => videoRef.current?.click()}
             />
             {/* Emoji */}
-            <BsEmojiSmileFill
-              className="w-6 h-6 fill-primary"
-              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-            />
-            {/* Emoji Picker */}
-            {showEmojiPicker && (
-              <div className="">
-                <div className="flex justify-center bg-popover border border-divider shadow-lg rounded-md p-2">
-                  <button
-                    className="text-red-500 hover:text-red-700 text-lg font-bold px-2"
-                    onClick={() => setShowEmojiPicker(false)}
-                  >
-                    <span className="text-red-500">✖</span>
-                  </button>
+            <div className="relative">
+              <BsEmojiSmileFill
+                className="w-6 h-6 fill-primary cursor-pointer"
+                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+              />
+              {/* Emoji Picker */}
+              {showEmojiPicker && (
+                <div ref={emojiPickerRef} className="absolute top-8 left-0 z-50 shadow-lg border border-divider rounded-lg bg-popover overflow-hidden">
+                  <div className="flex justify-end p-1 bg-popover">
+                    <button
+                      className="text-red-500 hover:text-red-700 text-sm font-bold px-2"
+                      onClick={() => setShowEmojiPicker(false)}
+                      type="button"
+                    >
+                      ✖
+                    </button>
+                  </div>
+                  <EmojiPicker onEmojiClick={handleEmojiClick} theme={theme === "dark" ? Theme.DARK : Theme.LIGHT} />
                 </div>
-                <EmojiPicker onEmojiClick={handleEmojiClick} theme={theme === "dark" ? Theme.DARK : Theme.LIGHT} />
-              </div>
-            )}
+              )}
+            </div>
           </div>
           <input
             type="file"

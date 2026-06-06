@@ -22,6 +22,8 @@ const LeftPanelChat = ({ onChatSelect }: LeftPanelChatProps) => {
   } = useChatStore();
   const { authUser, isCheckingAuth } = useAuthStore();
   const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
   useEffect(() => {
     if (authUser) {
       getChats();
@@ -39,6 +41,14 @@ const LeftPanelChat = ({ onChatSelect }: LeftPanelChatProps) => {
     setSelectedChat(chat);
     onChatSelect(chat._id);
   };
+
+  const filteredChats = chats.filter((chat) => {
+    const name = chat.isGroup
+      ? chat.groupName ?? "Unnamed Group"
+      : chat.fullName;
+    return name.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+
   return (
     <div className=" h-[calc(100vh-65px)] ">
       <div className="sticky top-0 bg-container z-10">
@@ -58,9 +68,11 @@ const LeftPanelChat = ({ onChatSelect }: LeftPanelChatProps) => {
               type="text"
               placeholder="Search or start a new chat"
               className="pl-10 py-2 text-sm w-full rounded shadow-sm bg-container focus-visible:ring-transparent"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <div className="" onClick={() => setIsOpen(true)}>
+          <div className="cursor-pointer" onClick={() => setIsOpen(true)}>
             <MdGroupAdd size={30} />
           </div>
           <CreateGroupDialog isOpen={isOpen} onClose={() => setIsOpen(false)} />
@@ -71,8 +83,8 @@ const LeftPanelChat = ({ onChatSelect }: LeftPanelChatProps) => {
       <div className="flex flex-col items-center overflow-auto h-full bg-container">
         {isUsersLoading || isGroupsLoading ? (
           <p>Loading chats...</p>
-        ) : chats.length > 0 ? (
-          chats.map((chat) => (
+        ) : filteredChats.length > 0 ? (
+          filteredChats.map((chat) => (
             <ChatItems
               key={chat._id}
               chat={chat}
@@ -80,6 +92,10 @@ const LeftPanelChat = ({ onChatSelect }: LeftPanelChatProps) => {
               onClick={() => handleChatItemClick(chat)}
             />
           ))
+        ) : chats.length > 0 ? (
+          <p className="text-center text-gray-500 text-sm mt-3">
+            No chats found matching "{searchTerm}"
+          </p>
         ) : (
           <div>
             <p className="text-center text-gray-500 text-sm mt-3">
