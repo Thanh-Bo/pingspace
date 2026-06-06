@@ -7,7 +7,7 @@ import { io, Socket } from "socket.io-client";
 const SOCKET_URL =
   import.meta.env.MODE === "development"
     ? "http://localhost:5000"
-    : "https://pingspace.onrender.com";
+    : (import.meta.env.VITE_SOCKET_URL || "http://localhost:5000");
 export interface User {
   _id: string;
   email: string;

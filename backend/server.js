@@ -13,54 +13,43 @@ import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser";
 import { app, server } from "./lib/socket.js";
 import path from "path";
-dotenv.config({ path: "./backend/.env" });
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.join(__dirname, ".env") });
 
 const PORT = process.env.PORT || 5000;
+const ALLOWED_ORIGINS = [
+  "http://localhost:5173",
+  process.env.FRONTEND_URL,
+].filter(Boolean);
 
-// AFTER: The Correct Configuration
+// Security headers
 app.use(
   helmet({
-    crossOriginEmbedderPolicy: false, // Keep this if needed
-    crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" }, // Keep this for popups
+    crossOriginEmbedderPolicy: false,
+    crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        // Allow scripts from your domain, Google, and inline scripts (needed by Vite/React)
-        scriptSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          "https://accounts.google.com",
-          "https://apis.google.com",
-        ],
-        // Allow styles from your domain and inline styles (needed by Tailwind/Vite)
+        scriptSrc: ["'self'", "'unsafe-inline'", "https://accounts.google.com", "https://apis.google.com"],
         styleSrc: ["'self'", "'unsafe-inline'"],
-        // *** THIS IS THE FIX FOR YOUR IMAGE PROBLEM ***
-        imgSrc: ["'self'", "data:", "https://res.cloudinary.com"],
-        // Allow connections to your own server (including WebSockets)
-        // IMPORTANT: Replace 'https://your-deployed-app.com' with your actual production URL
-        connectSrc: [
-          "'self'",
-          "http://localhost:5000",
-          "ws://localhost:5000",
-          "wss://pingspace.onrender.com",
-        ],
-        // Allow Google Sign-In to open its iframe
+        imgSrc: ["'self'", "data:", "https://res.cloudinary.com", "https://lh3.googleusercontent.com"],
+        connectSrc: ["'self'", "http://localhost:5000", "ws://localhost:5000", process.env.FRONTEND_URL, process.env.BACKEND_URL].filter(Boolean),
         frameSrc: ["'self'", "https://accounts.google.com"],
       },
     },
   })
 );
 
-const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
 app.use(cookieParser());
-app.use(express.json({ limit: "50mb" })); // or any size you need
+app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://pingspace.onrender.com"],
+    origin: ALLOWED_ORIGINS,
     credentials: true,
   })
 );
@@ -73,9 +62,9 @@ app.use("/api/request", requestRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/notification", notificationRoutes);
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
-});
+// Health check endpoint
+app.get("/health", (req, res) => res.json({ status: "ok" }));
+
 server.listen(PORT, () => {
   connectDB();
   console.log("Server is running on port : ", PORT);

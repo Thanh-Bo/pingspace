@@ -106,6 +106,10 @@ export const goggleLogin = async (req, res) => {
         profilePic: picture,
         googleId: sub,
       });
+    } else if (!user.googleId || user.profilePic === "/avatar.png") {
+      user.googleId = sub;
+      user.profilePic = picture;
+      await user.save();
     }
 
     generateToken(user._id, res);
