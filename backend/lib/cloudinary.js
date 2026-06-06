@@ -2,7 +2,7 @@ import { v2 as cloudinary } from "cloudinary";
 
 import { config } from "dotenv";
 
-config();
+config({ path: "./backend/.env" });
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

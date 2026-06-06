@@ -236,7 +236,7 @@ const ProfileDialog = ({
               {/* Cover Image */}
               <div className="relative w-full h-48 overflow-hidden">
                 <img
-                  src={userData?.coverPic || "pingspace.png"}
+                  src={userData?.coverPic || "/avatar.png"}
                   className="h-full w-full object-cover"
                   alt="cover image"
                 />
@@ -271,7 +271,7 @@ const ProfileDialog = ({
                 <div className="relative">
                   <Avatar className="size-24 border-4 border-gray-900">
                     <AvatarImage
-                      src={userData?.profilePic || "pingspace.png"}
+                      src={userData?.profilePic || "/avatar.png"}
                     />
                     <AvatarFallback>
                       {userData?.fullName?.charAt(0) || "U"}

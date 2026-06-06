@@ -95,7 +95,7 @@ const EditProfile = ({
           </div>
           {/* Bio */}
           <div>
-            <Label htmlFor="fullName" className="text-sm font-medium ">
+            <Label htmlFor="Bio" className="text-sm font-medium ">
               Bio
             </Label>
             <Input
@@ -171,7 +171,7 @@ const EditProfile = ({
             <Button type="button" variant="outline" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="submit" variant="outline">
+            <Button type="submit" variant="default">
               Update
             </Button>
           </div>

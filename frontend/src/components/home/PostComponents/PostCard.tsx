@@ -62,7 +62,7 @@ const PostCard = ({ post, onImageClick }: PostCardProps) => {
 
   return (
     <>
-      <div className="flex gap-2 items-start p-4 border-b border-gray-700">
+      <div className="flex gap-2 items-start p-4 border-b border-divider">
         {/* Avatar */}
         <div className="avatar">
           <Link
@@ -71,7 +71,7 @@ const PostCard = ({ post, onImageClick }: PostCardProps) => {
           >
             <Avatar className=" ">
               <AvatarImage
-                src={postOwner.profilePic || "/avatar-placeholder.png"}
+                src={postOwner.profilePic || "/avatar.png"}
               />
             </Avatar>
           </Link>
@@ -83,7 +83,7 @@ const PostCard = ({ post, onImageClick }: PostCardProps) => {
             <Link to={`/profile/${postOwner._id}`} className="font-bold">
               {postOwner.fullName}
             </Link>
-            <span className="text-gray-700 flex gap-1 text-sm">
+            <span className="text-muted-foreground flex gap-1 text-sm">
               <span className="  ">{formattedDate}</span>
             </span>
             {/* Delete */}
@@ -105,7 +105,7 @@ const PostCard = ({ post, onImageClick }: PostCardProps) => {
             {post.img && (
               <img
                 src={post.img || ""}
-                className="h-80 object-contain rounded-lg border border-gray-700"
+                className="h-80 object-contain rounded-lg border border-divider"
                 onClick={() => onImageClick(post.img || "")}
                 alt=""
               />
@@ -113,7 +113,7 @@ const PostCard = ({ post, onImageClick }: PostCardProps) => {
             {post.video && (
               <video
                 src={post.video || ""}
-                className="h-80 object-contain rounded-lg border border-gray-700"
+                className="h-80 object-contain rounded-lg border border-divider"
                 controls
                 muted
               />
@@ -195,7 +195,7 @@ const PostCard = ({ post, onImageClick }: PostCardProps) => {
                   <Link to={`/profile/${comment.user._id}`}>
                     <Avatar>
                       <AvatarImage
-                        src={comment.user.profilePic || "/pingspace.png"}
+                        src={comment.user.profilePic || "/avatar.png"}
                       />
                     </Avatar>
                   </Link>
@@ -206,7 +206,7 @@ const PostCard = ({ post, onImageClick }: PostCardProps) => {
                           {comment.user.fullName}
                         </span>
                       </Link>
-                      <span className="text-gray-700 flex gap-1 text-sm">
+                      <span className="text-muted-foreground flex gap-1 text-sm">
                         <span className="  ">
                           {formatDate(Date.parse(comment.createdAt))}
                         </span>
@@ -219,7 +219,7 @@ const PostCard = ({ post, onImageClick }: PostCardProps) => {
             </div>
 
             <form
-              className="flex gap-2 items-center mt-4 border-t border-gray-600 pt-2"
+              className="flex gap-2 items-center mt-4 border-t border-divider pt-2"
               onSubmit={handlePostComment}
             >
               <Textarea

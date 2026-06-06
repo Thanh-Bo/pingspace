@@ -22,8 +22,8 @@ const ChatItems = ({ chat, authUser, onClick }: ChatItemsProps) => {
     : "text";
 
   const isSelected = selectedChat?._id === chat._id;
-  const itemClass = `flex gap-2 items-center p-3  hover:bg-chat-hover cursor-pointer w-full h-25 ${
-    isSelected ? "bg-sender" : ""
+  const itemClass = `flex gap-2 items-center p-3 hover:bg-chat-hover cursor-pointer w-full h-25 ${
+    isSelected ? "bg-chat-item-selected" : ""
   }`;
   return (
     <>
@@ -32,8 +32,8 @@ const ChatItems = ({ chat, authUser, onClick }: ChatItemsProps) => {
           <AvatarImage
             src={
               chat.isGroup
-                ? chat.groupImage || "/pingspace.png"
-                : chat.profilePic || "pingspace.png"
+                ? chat.groupImage || "/avatar.png"
+                : chat.profilePic || "/avatar.png"
             }
             className="object-cover rounded-full"
           />
@@ -74,7 +74,7 @@ const ChatItems = ({ chat, authUser, onClick }: ChatItemsProps) => {
           </p>
         </div>
       </div>
-      <hr className="h-[1px] mx-10 bg-gray-primary" />
+      <hr className="h-[1px] mx-10 bg-divider" />
     </>
   );
 };

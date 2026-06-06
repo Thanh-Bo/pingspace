@@ -14,8 +14,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogOverlay,
-  DialogPortal,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import FriendList from "./FriendList";
 import { useRequestStore } from "@/store/useRequestStore";
@@ -232,7 +231,7 @@ const Profile = () => {
         {/* Cover Image */}
         <div className="relative w-full h-48 overflow-hidden">
           <img
-            src={userData?.coverPic || "/pingspace.png"}
+            src={userData?.coverPic || "/avatar.png"}
             className="h-full w-full object-cover"
             alt="cover"
           />
@@ -262,8 +261,8 @@ const Profile = () => {
         {/* Profile Image */}
         <div className="relative -mt-12 ml-4 flex items-end">
           <div className="relative ">
-            <Avatar className="size-30 border-4 border-gray-900">
-              <AvatarImage src={userData?.profilePic || "/pingspace.png"} />
+            <Avatar className="size-32 border-4 border-background">
+              <AvatarImage src={userData?.profilePic || "/avatar.png"} />
               <AvatarFallback>
                 {userData?.fullName?.charAt(0) || "U"}
               </AvatarFallback>
@@ -362,7 +361,7 @@ const Profile = () => {
 
             {/* Only display this shit if it's not the current user's profile */}
             {!isOwnProfile && (
-              <div className="flex justify-center gap-4 px-4  border-gray-700 m-3">
+              <div className="flex justify-center gap-4 px-4  border-divider m-3">
                 {/* Add friend */}
                 {!isFriend && !hasSentRequest && !hasReceivedRequest && (
                   <Button
@@ -412,18 +411,17 @@ const Profile = () => {
 
         {/* Dialog Friend */}
         <Dialog open={isOpenDialogFriend} onOpenChange={setIsOpenDialogFriend}>
-          <DialogPortal>
-            <DialogOverlay className="dialog-overlay" />
-            <DialogContent className="dialog-content">
-              <DialogHeader>Friend List</DialogHeader>
-              <DialogDescription asChild>
-                <FriendList
-                  friends={userData?.friends || []}
-                  onClose={() => setIsOpenDialogFriend(false)}
-                />
-              </DialogDescription>
-            </DialogContent>
-          </DialogPortal>
+          <DialogContent className="dialog-content">
+            <DialogHeader>
+              <DialogTitle>Friend List</DialogTitle>
+            </DialogHeader>
+            <DialogDescription asChild>
+              <FriendList
+                friends={userData?.friends || []}
+                onClose={() => setIsOpenDialogFriend(false)}
+              />
+            </DialogDescription>
+          </DialogContent>
         </Dialog>
       </div>
     </>

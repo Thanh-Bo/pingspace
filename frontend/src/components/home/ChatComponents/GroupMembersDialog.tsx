@@ -67,7 +67,7 @@ const GroupMembersDialog = ({
                     >
                       <Avatar className="overflow-visible">
                         <AvatarImage
-                          src={user.profilePic || "/pingspace.png"}
+                          src={user.profilePic || "/avatar.png"}
                           className="rounded-full object-cover"
                         />{" "}
                         {/* Use a default image path */}
@@ -97,14 +97,12 @@ const GroupMembersDialog = ({
           </DialogHeader>
         </DialogContent>
       </Dialog>
-      <div className="hidden">
-        <ProfileDialog
-          isOpen={isProfileDialogOpen}
-          onClose={() => setIsProfileDialogOpen(false)}
-          displayUser={profileToDisplay}
-          closeAllDialog={closeAllDialog}
-        />
-      </div>
+      <ProfileDialog
+        isOpen={isProfileDialogOpen}
+        onClose={() => setIsProfileDialogOpen(false)}
+        displayUser={profileToDisplay}
+        closeAllDialog={closeAllDialog}
+      />
     </>
   );
 };

@@ -55,7 +55,7 @@ const FriendRequestItem = ({ request, type }: FriendRequestItemProps) => {
   };
   return (
     <div className="flex flex-col gap-3 p-4 border-b border-divider last:border-b-0 bg-secondary rounded-lg my-2 mx-4 hover:bg-chat-hover">
-      <div className="flex items-center justify-between ">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div
           className="flex items-center gap-3 cursor-pointer"
           onClick={() => {
@@ -64,7 +64,7 @@ const FriendRequestItem = ({ request, type }: FriendRequestItemProps) => {
           }}
         >
           <Avatar className="size-12">
-            <AvatarImage src={displayUser?.profilePic || "/pingspace.png"} />
+            <AvatarImage src={displayUser?.profilePic || "/avatar.png"} />
             <AvatarFallback>
               {displayUser?.fullName?.charAt(0) || "U"}
             </AvatarFallback>
@@ -74,9 +74,9 @@ const FriendRequestItem = ({ request, type }: FriendRequestItemProps) => {
             <p className="font-semibold text-lg text-foreground">
               {displayUser?.fullName || "Unknown User"}
             </p>
-            <p className="text-sm text-muted-foreground">
-              {type === "sent" ? "Sent a request" : "Want to be friend"}
-              <span className="ml-2 text-xs">
+            <p className="text-sm text-muted-foreground flex items-center gap-2">
+              <span>{type === "sent" ? "Sent a request" : "Want to be friend"}</span>
+              <span className="text-xs text-muted-foreground">
                 {request.createdAt
                   ? new Date(request.createdAt).toLocaleDateString("en-GB")
                   : ""}
@@ -86,11 +86,11 @@ const FriendRequestItem = ({ request, type }: FriendRequestItemProps) => {
         </div>
 
         {/* Action button */}
-        <div className="flex gap-2 mt-2">
+        <div className="flex gap-2 w-full sm:w-auto">
           {type === "sent" && (
             <>
               <Button
-                className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full"
+                className="flex-1 sm:flex-initial bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full text-sm"
                 onClick={() => setIsConfirmCancelOpen(true)}
                 disabled={isCancellingRequest}
               >
@@ -114,14 +114,14 @@ const FriendRequestItem = ({ request, type }: FriendRequestItemProps) => {
           {type === "received" && (
             <>
               <Button
-                className="flex-1 bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-full"
+                className="flex-1 sm:flex-initial bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-full text-sm"
                 onClick={handleAccept}
-                disabled={isCancellingRequest}
+                disabled={isAcceptingRequest}
               >
                 {isAcceptingRequest ? "Accepting..." : "Accept"}
               </Button>
               <Button
-                className="flex-1 bg-red-600 hover:bg-red-8 00 text-white font-bold py-2 px-4 rounded-full"
+                className="flex-1 sm:flex-initial bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-full text-sm"
                 onClick={handleReject}
                 disabled={isRejectingRequest}
               >

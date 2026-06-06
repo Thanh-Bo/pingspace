@@ -4,12 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "../../ui/button";
 import { useChatStore } from "@/store/useChatStore";
 import MediaDropdown from "./MediaDropdown";
-import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
+import EmojiPicker, { EmojiClickData, Theme } from "emoji-picker-react";
+import { useTheme } from "@/components/theme-provider";
 const MessageInput = () => {
   const [text, setText] = useState("");
   const { sendMessage } = useChatStore();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const emojiPickerRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
   // Handle sending a message
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,7 +49,7 @@ const MessageInput = () => {
     };
   }, [showEmojiPicker]);
   return (
-    <div className="bg-gray-primary p-2 flex gap-4 items-center border-t  border-divider ">
+    <div className="bg-container p-2 flex gap-4 items-center border-t border-divider">
       <div className="relative flex gap-2 ml-2">
         {/* EMOJI PICKER WILL GO HERE */}
         <Button
@@ -76,7 +78,7 @@ const MessageInput = () => {
               >
                 <X size={16} />
               </Button>
-              <EmojiPicker onEmojiClick={handleEmojiClick} />
+              <EmojiPicker onEmojiClick={handleEmojiClick} theme={theme === "dark" ? Theme.DARK : Theme.LIGHT} />
             </div>
           </div>
         )}
@@ -87,7 +89,7 @@ const MessageInput = () => {
           <Input
             type="text"
             placeholder="Type a message"
-            className="py-2 text-sm w-full rounded-lg shadow-sm bg-gray-tertiary focus-visible:ring-transparent"
+            className="py-2 text-sm w-full rounded-lg shadow-sm bg-input focus-visible:ring-transparent"
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
@@ -96,7 +98,8 @@ const MessageInput = () => {
           <Button
             type="submit"
             size={"sm"}
-            className="bg-transparent text-foreground hover:bg-transparent"
+            variant="ghost"
+            className="text-primary hover:text-primary/80 hover:bg-transparent transition-colors duration-200"
           >
             <Send />
           </Button>

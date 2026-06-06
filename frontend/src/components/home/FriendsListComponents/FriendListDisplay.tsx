@@ -215,7 +215,7 @@ export const FriendListDisplay = () => {
                     <div className="flex items-center gap-3 ">
                       <Avatar className="size-10">
                         <AvatarImage
-                          src={friend.profilePic || "/pingspace.png"}
+                          src={friend.profilePic || "/avatar.png"}
                           className="rounded-full"
                         />
                         <AvatarFallback>

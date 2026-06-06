@@ -176,7 +176,7 @@ const GroupListDisplay = () => {
                 <div className="flex items-center gap-3 ">
                   <Avatar className="size-12">
                     <AvatarImage
-                      src={group.groupImage || "/pingspace.png"}
+                      src={group.groupImage || "/avatar.png"}
                       className="rounded-full"
                     />
                     <AvatarFallback>
@@ -251,15 +251,13 @@ const GroupListDisplay = () => {
           }
         />
       )}
-      <div className="hidden">
-        {selectedGroup && (
-          <GroupInfoDialog
-            isOpen={showGroupInfor}
-            onClose={() => setShowGroupInfor(false)}
-            group={selectedGroup}
-          />
-        )}
-      </div>
+      {selectedGroup && (
+        <GroupInfoDialog
+          isOpen={showGroupInfor}
+          onClose={() => setShowGroupInfor(false)}
+          group={selectedGroup}
+        />
+      )}
     </div>
   );
 };

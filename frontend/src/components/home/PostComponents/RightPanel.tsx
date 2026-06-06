@@ -60,7 +60,7 @@ const RightPanel = () => {
                     className="flex gap-2 items-center"
                   >
                     <Avatar>
-                      <AvatarImage src={user.profilePic || "/pingspace.png"} />
+                      <AvatarImage src={user.profilePic || "/avatar.png"} />
                     </Avatar>
                     <div className="flex flex-col">
                       <span className="font-semibold tracking-tight truncate w-28">

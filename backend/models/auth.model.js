@@ -20,11 +20,11 @@ const userSchema = new mongoose.Schema(
     },
     profilePic: {
       type: String,
-      default: "",
+      default: "/avatar.png",
     },
     coverPic: {
       type: String,
-      default: "",
+      default: "/avatar.png",
     },
     bio: {
       type: String,

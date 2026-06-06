@@ -7,13 +7,11 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogOverlay,
-  DialogPortal,
-} from "@radix-ui/react-dialog";
+  DialogTitle,
+} from "../../ui/dialog";
 import { MessageSeenSvg } from "@/lib/svgs";
 // import { Bot } from "lucide-react";
 import ChatBubbleAvatar from "./ChatBubbleAvatar";
-import { X } from "lucide-react";
 type ChatBubbleProps = {
   message: Message;
   me: User;
@@ -113,13 +111,15 @@ export default ChatBubble;
 
 const VideoMessage = ({ message }: { message: Message }) => {
   return (
-    <ReactPlayer
-      url={message.video}
-      width="250px"
-      height="250px"
-      controls={true}
-      light={true}
-    />
+    <div className="w-full max-w-[280px] aspect-video sm:max-w-[400px] rounded overflow-hidden">
+      <ReactPlayer
+        url={message.video}
+        width="100%"
+        height="100%"
+        controls={true}
+        light={true}
+      />
+    </div>
   );
 };
 
@@ -158,28 +158,17 @@ const ImageDialog = ({
         if (!isOpen) onClose();
       }}
     >
-      <DialogPortal>
-        <DialogOverlay className="fixed inset-0 z-40 bg-black/90">
-          <DialogContent className="w-full h-full">
-            <button
-              onClick={onClose}
-              className="absolute top-4 right-4 z-50 p-2 rounded-full
-                     bg-gray-800/50 text-white hover:bg-gray-700/70
-                     transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white"
-              aria-label="Close image viewer"
-            >
-              <X size={24} />
-            </button>
-            <DialogDescription className="relative w-full h-full flex justify-center border-none">
-              <img
-                src={src}
-                className=" max-w-full max-h-full rounded-lg object-contain"
-                alt="image"
-              />
-            </DialogDescription>
-          </DialogContent>
-        </DialogOverlay>
-      </DialogPortal>
+      <DialogContent className="max-w-4xl p-0 border-none bg-transparent shadow-none">
+        <DialogTitle className="sr-only">Image Viewer</DialogTitle>
+        <DialogDescription className="sr-only">Detailed view of the chat image attachment</DialogDescription>
+        <div className="relative w-full h-full flex justify-center items-center">
+          <img
+            src={src}
+            className="max-w-full max-h-[85vh] rounded-lg object-contain"
+            alt="chat attachment"
+          />
+        </div>
+      </DialogContent>
     </Dialog>
   );
 };
@@ -193,11 +182,11 @@ const MessageTime = ({ time, fromMe }: { time: string; fromMe: boolean }) => {
 };
 
 const OtherMessageIndicator = () => (
-  <div className="absolute top-0 -left-[4px] w-3 h-3 rounded-bl-full" />
+  <div className="absolute bg-receiver top-0 -left-[4px] w-3 h-3 rounded-bl-full" />
 );
 
 const SelfMessageIndicator = () => (
-  <div className="absolute bg-green-chat top-0 -right-[3px] w-3 h-3 rounded-br-full overflow-hidden" />
+  <div className="absolute bg-sender top-0 -right-[3px] w-3 h-3 rounded-br-full overflow-hidden" />
 );
 
 const TextMessage = ({ message }: { message: Message }) => {

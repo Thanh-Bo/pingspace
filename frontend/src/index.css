@@ -122,6 +122,8 @@
   /* Map CSS variables to Tailwind CSS custom properties */
   --color-background: hsl(var(--background));
   --color-container: hsl(var(--container));
+  --color-card: hsl(var(--modal));
+  --color-card-foreground: hsl(var(--foreground));
 
   --color-foreground: hsl(var(--foreground));
   --color-muted-foreground: hsl(var(--muted-foreground));

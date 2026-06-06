@@ -1,6 +1,6 @@
 import { useChatStore } from "@/store/useChatStore";
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"; 
 import { ImageIcon, Plus, Video} from "lucide-react";
 import { useEffect, useRef, useState } from "react"
@@ -199,8 +199,8 @@ const MediaImageDialog = ({ isOpen , onClose , selectedImage , isLoading ,handle
                 <VisuallyHidden>
 					<DialogTitle>Preview Image</DialogTitle>
 				</VisuallyHidden>
-                <DialogDescription className="flex flex-col gap-10 justify-center items-center">
-                    {renderedImage && <img src={renderedImage}  width={300} height={300} alt='selected image' />}
+                <DialogDescription className="flex flex-col gap-6 justify-center items-center w-full">
+                    {renderedImage && <img src={renderedImage} className="max-w-full max-h-[60vh] object-contain rounded" alt='selected image' />}
 
                     <Button className="w-full" 
                             disabled={isLoading} 
@@ -237,9 +237,9 @@ const MediaVideoDialog = ({ isOpen , onClose , selectedVideo , isLoading , handl
              <VisuallyHidden>
 					<DialogTitle>Preview Video</DialogTitle>
 				</VisuallyHidden>
-                <DialogDescription>Video</DialogDescription>
-                <div className="w-full">
-                    {renderedVideo && <ReactPlayer url={renderedVideo} controls width='100%' /> }
+                <DialogDescription className="text-sm text-muted-foreground mb-4">Preview Video</DialogDescription>
+                <div className="w-full aspect-video rounded overflow-hidden mb-4">
+                    {renderedVideo && <ReactPlayer url={renderedVideo} controls width='100%' height='100%' /> }
 
                 </div>
                 <Button 

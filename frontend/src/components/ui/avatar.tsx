@@ -21,12 +21,22 @@ function Avatar({
 
 function AvatarImage({
   className,
+  src,
   ...props
 }: React.ComponentProps<typeof AvatarPrimitive.Image>) {
+  const [status, setStatus] = React.useState<"loading" | "loaded" | "error">("loading");
+
+  if (status === "error" || !src) return null;
+
   return (
     <AvatarPrimitive.Image
       data-slot="avatar-image"
       className={cn("aspect-square size-full", className)}
+      src={src}
+      onLoadingStatusChange={(s) => {
+        if (s === "error") setStatus("error");
+        else if (s === "loaded") setStatus("loaded");
+      }}
       {...props}
     />
   )

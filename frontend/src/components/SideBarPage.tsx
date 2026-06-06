@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 import ProfileDialog from "./home/ChatComponents/ProfileDialog";
 import { useAuthStore } from "@/store/useAuthStore";
-import { ThemeProvider } from "./theme-provider";
 import { ModeToggle } from "./mode-toggle";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -52,7 +51,7 @@ const SideBarPage = () => {
               className="flex items-center gap-x-4 cursor-pointer hover:bg-chat-hover p-2 rounded-full transition-all"
             >
               <Avatar>
-                <AvatarImage src={authUser?.profilePic || "pingspace.png"} />
+                <AvatarImage src={authUser?.profilePic || "/avatar.png"} />
                 <AvatarFallback>
                   {authUser?.fullName?.charAt(0) || "U"}
                 </AvatarFallback>
@@ -86,12 +85,9 @@ const SideBarPage = () => {
             </li>
           ))}
 
-          {/* Theme Toggle */}
           <li>
             <div className="flex items-center gap-x-4  pl-2 pr-4 text-xl hover:bg-chat-hover rounded-full transition-all">
-              <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-                <ModeToggle />
-              </ThemeProvider>
+              <ModeToggle />
               <span className="lg:block hidden">Theme</span>
             </div>
           </li>

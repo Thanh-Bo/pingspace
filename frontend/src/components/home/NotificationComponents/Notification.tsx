@@ -40,8 +40,8 @@ const Notification = () => {
 
   return (
     <>
-      <div className="flex-1 border-l border-r border-gray-700 min-h-screen overflow-y-auto">
-        <div className="flex justify-between items-center p-4 border-b border-gray-700">
+      <div className="flex-1 border-l border-r border-divider h-full overflow-y-auto flex flex-col">
+        <div className="flex justify-between items-center p-4 border-b border-divider">
           <h1 className="font-bold">Notifications</h1>
           {notifications.length !== 0 && (
             <Button
@@ -73,7 +73,7 @@ const Notification = () => {
         )}
 
         {notifications.map((notification) => (
-          <div className="border-b border-gray-700" key={notification._id}>
+          <div className="border-b border-divider" key={notification._id}>
             <div className="flex gap-2 p-4 justify-between">
               <div className="flex  gap-2">
                 {notification.type === "like" && <ThumbsUp className="" />}
@@ -84,7 +84,7 @@ const Notification = () => {
                   <Avatar className="">
                     <Link to={`/profile/${notification.from._id}`}>
                       <AvatarImage
-                        src={notification.from.profilePic || "/pingspace.png"}
+                        src={notification.from.profilePic || "/avatar.png"}
                       />
                     </Link>
                   </Avatar>

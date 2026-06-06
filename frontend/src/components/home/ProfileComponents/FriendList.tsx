@@ -20,7 +20,7 @@ const FriendList = ({ friends, onClose }: FriendListProps) => {
             >
               <Avatar>
                 <AvatarImage
-                  src={friend.profilePic || "/pingspace.png"}
+                  src={friend.profilePic || "/avatar.png"}
                   alt={friend.fullName}
                 />
               </Avatar>

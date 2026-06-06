@@ -215,26 +215,25 @@ const CreateGroupDialog = ({ isOpen, onClose }: CreateGroupDialogProps) => {
                     <div
                       key={user._id}
                       className={`flex gap-3 items-center p-2 mb-1 rounded hover:bg-chat-hover cursor-pointer transition-all duration-300 ease-in-out ${
-                        isSelected ? "bg-chat-hover" : ""
+                        isSelected ? "bg-chat-item-selected" : ""
                       }`}
                       onClick={() => handleUserSelect(user._id)}
                     >
-                      {" "}
                       <Avatar className="overflow-visible">
                         <AvatarImage
-                          src={user.profilePic || "/pingspace.png"}
-                          className="rounded-full object-cover 0"
+                          src={user.profilePic || "/avatar.png"}
+                          className="rounded-full object-cover"
                         />
-                        {/* Use a default image path */}
                         <AvatarFallback>
                           <div className="animate-pulse bg-gray-tertiary w-full h-full rounded-full"></div>
                         </AvatarFallback>
                       </Avatar>
-                      <div className="w-full ">
-                        <div className="flex items-center gap-2">
-                          <h3 className="text-md font-medium">
-                            {user.fullName}
-                          </h3>
+                      <div className="w-full flex items-center justify-between">
+                        <h3 className="text-md font-medium">
+                          {user.fullName}
+                        </h3>
+                        <div className="size-5 rounded-full border border-primary flex items-center justify-center bg-transparent flex-shrink-0">
+                          {isSelected && <div className="size-3 rounded-full bg-primary" />}
                         </div>
                       </div>
                     </div>
@@ -244,9 +243,9 @@ const CreateGroupDialog = ({ isOpen, onClose }: CreateGroupDialogProps) => {
             </div>
 
             <div className="mt-5 flex justify-between">
-              <Button variant={"outline"}>
-                <DialogClose onClick={onClose}>Close</DialogClose>
-              </Button>
+              <DialogClose asChild>
+                <Button variant="outline" onClick={onClose}>Close</Button>
+              </DialogClose>
               <Button onClick={handleCreateGroup}>
                 {isLoading ? "Creating..." : "Create"}
               </Button>

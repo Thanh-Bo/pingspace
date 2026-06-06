@@ -3,12 +3,13 @@ import { BsEmojiSmileFill } from "react-icons/bs";
 import { ChangeEvent, useRef, useState } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 
-import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
+import EmojiPicker, { EmojiClickData, Theme } from "emoji-picker-react";
 import { usePostStore } from "@/store/usePostStore";
 import { useAuthStore } from "@/store/useAuthStore";
 import ImageModal from "./ImageModal";
 import { Video } from "lucide-react";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { useTheme } from "@/components/theme-provider";
 
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,7 @@ const CreatePost = () => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { authUser } = useAuthStore();
+  const { theme } = useTheme();
 
   const imgRef = useRef<HTMLInputElement | null>(null);
   const videoRef = useRef<HTMLInputElement | null>(null);
@@ -72,17 +74,17 @@ const CreatePost = () => {
     setText((prevText) => prevText + emojiObject.emoji);
   };
   return (
-    <div className="flex p-4 items-start gap-4 border-b border-gray-700">
+    <div className="flex p-4 items-start gap-4 border-b border-divider">
       <div className="">
         <Avatar>
           <AvatarImage
-            src={authUser?.profilePic || "/avatar-placeholder.png"}
+            src={authUser?.profilePic || "/avatar.png"}
           />
         </Avatar>
       </div>
       <form className="flex flex-col gap-2 w-full" onSubmit={handleSubmit}>
         <Textarea
-          className="textarea w-full p-2 text-lg resize-none  border-gray-800"
+          className="textarea w-full p-2 text-lg resize-none border border-border"
           placeholder="What is happening?!"
           value={text}
           onChange={(e) => setText(e.target.value)}
@@ -109,8 +111,8 @@ const CreatePost = () => {
         {/* Video Review */}
         {video && (
           <div className="relative w-72 mx-auto">
-            <Video
-              className="absolute top-0 right-0bg-gray-800 rounded-full w-5 h-5 cursor-pointer"
+            <IoCloseSharp
+              className="absolute top-0 right-0 bg-gray-800 text-white rounded-full w-5 h-5 cursor-pointer"
               onClick={() => {
                 setVideo(null);
                 if (videoRef.current) videoRef.current.value = "";
@@ -129,7 +131,7 @@ const CreatePost = () => {
           onClose={() => setIsModalOpen(false)}
           imgUrl={img}
         />
-        <div className="flex justify-between border-t py-2 border-t-gray-700">
+        <div className="flex justify-between border-t py-2 border-divider">
           <div className="flex gap-3 items-center">
             {/* Image */}
             <CiImageOn
@@ -149,15 +151,15 @@ const CreatePost = () => {
             {/* Emoji Picker */}
             {showEmojiPicker && (
               <div className="">
-                <div className="flex justify-center bg-white shadow-lg rounded-md p-2">
+                <div className="flex justify-center bg-popover border border-divider shadow-lg rounded-md p-2">
                   <button
-                    className="text-red-500 hover:text-red-700 text-lg font-bold px-2 !important"
+                    className="text-red-500 hover:text-red-700 text-lg font-bold px-2"
                     onClick={() => setShowEmojiPicker(false)}
                   >
                     <span className="text-red-500">✖</span>
                   </button>
                 </div>
-                <EmojiPicker onEmojiClick={handleEmojiClick} />
+                <EmojiPicker onEmojiClick={handleEmojiClick} theme={theme === "dark" ? Theme.DARK : Theme.LIGHT} />
               </div>
             )}
           </div>

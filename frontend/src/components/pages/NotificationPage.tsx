@@ -15,8 +15,7 @@ const NotificationPage = () => {
         </div>
 
         <div
-          className=" md:w-1/6 h-full 
-           flex"
+          className="hidden lg:flex lg:w-1/6 h-full"
         >
           <RightPanel />
         </div>

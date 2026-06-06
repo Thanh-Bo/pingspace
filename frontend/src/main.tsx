@@ -5,13 +5,16 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App.tsx";
+import { ThemeProvider } from "./components/theme-provider.tsx";
 const clientId =
-  "782147798586-u5q2lqj047p80juq89uj9fdrp8dkbleu.apps.googleusercontent.com";
+  "174253302935-0r9r4ft19juva421r8b8nmvd5nl26oad.apps.googleusercontent.com";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <GoogleOAuthProvider clientId={clientId}>
-        <App />
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <App />
+        </ThemeProvider>
       </GoogleOAuthProvider>
     </BrowserRouter>
   </StrictMode>

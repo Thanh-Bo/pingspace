@@ -78,7 +78,7 @@ const UserSelectionList = ({
             className={`flex gap-3 items-center p-2 rounded cursor-pointer
                             transition-all ease-in-out duration-300
                             hover:bg-chat-hover
-                            ${isSelected ? "bg-chat-hover" : ""}
+                            ${isSelected ? "bg-chat-item-selected" : ""}
                         `}
             onClick={() => {
               if (isSelected) {
@@ -92,16 +92,17 @@ const UserSelectionList = ({
           >
             <Avatar className="overflow-visible">
               <AvatarImage
-                src={user.profilePic || "pingspace.png"}
+                src={user.profilePic || "/avatar.png"}
                 className="rounded-full object-cover "
               />
               <AvatarFallback>
                 <div className="animate-pulse bg-gray-tertiary w-full h-full rounded-full" />
               </AvatarFallback>
             </Avatar>
-            <div className="w-full">
-              <div className="flex items-center justify-between">
-                <p className="text-md font-medium">{user.fullName}</p>
+            <div className="w-full flex items-center justify-between">
+              <p className="text-md font-medium">{user.fullName}</p>
+              <div className="size-5 rounded-full border border-primary flex items-center justify-center bg-transparent flex-shrink-0">
+                {isSelected && <div className="size-3 rounded-full bg-primary" />}
               </div>
             </div>
           </div>

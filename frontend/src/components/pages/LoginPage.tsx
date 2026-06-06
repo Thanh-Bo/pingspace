@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -55,7 +55,7 @@ export const LoginPage = () => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
-            className="space-y-6 p-2"
+            className="space-y-4 p-2"
           >
             {/* Email */}
             <FormField
@@ -63,15 +63,16 @@ export const LoginPage = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-lg md:text-xl">Email</FormLabel>
+                  <FormLabel className="text-sm font-medium">Email</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
                       placeholder="xuanpq359@gmail.com"
-                      className="h-14 text-lg md:text-xl"
+                      className="h-10 text-sm"
                       {...field}
                     />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -82,15 +83,16 @@ export const LoginPage = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-lg md:text-xl">Password</FormLabel>
+                  <FormLabel className="text-sm font-medium">Password</FormLabel>
                   <FormControl>
                     <Input
                       type="password"
                       placeholder="••••••••"
-                      className="h-14 text-lg md:text-xl"
+                      className="h-10 text-sm"
                       {...field}
                     />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -98,7 +100,7 @@ export const LoginPage = () => {
             <Button
               type="submit"
               disabled={isLoggingIn}
-              className="w-full h-14 text-lg md:text-xl"
+              className="w-full h-10 text-sm"
             >
               {isLoggingIn ? "Loading..." : "Login"}
             </Button>

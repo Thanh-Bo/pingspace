@@ -143,8 +143,8 @@ const RightPanelChat = ({
               <AvatarImage
                 src={
                   selectedChat.isGroup
-                    ? selectedChat.groupImage || "/pingspace.png"
-                    : selectedChat.profilePic || "/pingspace.png"
+                    ? selectedChat.groupImage || "/avatar.png"
+                    : selectedChat.profilePic || "/avatar.png"
                 }
                 className="object-cover"
               />
@@ -240,36 +240,30 @@ const RightPanelChat = ({
           </DialogContent>
         </DialogOverlay>
       </Dialog>
-      <div className="hidden">
-        {selectedChat &&
-          selectedGroup && ( // Only render if selectedChat and selectedGroup are not null
-            <GroupMembersDialog
-              isOpen={isGroupMembersDialogOpen}
-              onClose={() => setIsGroupMembersDialogOpen(false)}
-              group={selectedGroup}
-              closeAllDialog={closeDialog}
-            />
-          )}
-      </div>
-
-      <div className="hidden">
-        <ProfileDialog
-          isOpen={isProfileDialogOpen}
-          onClose={() => setIsProfileDialogOpen(false)}
-          displayUser={profileToDisplay}
-          closeAllDialog={closeDialog}
-        />
-      </div>
-      <div className="hidden">
-        {selectedGroup && (
-          <GroupInfoDialog
-            isOpen={isGroupInfoDialogOpen}
-            onClose={() => setIsGroupInfoDialogOpen(false)}
+      {selectedChat &&
+        selectedGroup && ( // Only render if selectedChat and selectedGroup are not null
+          <GroupMembersDialog
+            isOpen={isGroupMembersDialogOpen}
+            onClose={() => setIsGroupMembersDialogOpen(false)}
             group={selectedGroup}
             closeAllDialog={closeDialog}
           />
         )}
-      </div>
+
+      <ProfileDialog
+        isOpen={isProfileDialogOpen}
+        onClose={() => setIsProfileDialogOpen(false)}
+        displayUser={profileToDisplay}
+        closeAllDialog={closeDialog}
+      />
+      {selectedGroup && (
+        <GroupInfoDialog
+          isOpen={isGroupInfoDialogOpen}
+          onClose={() => setIsGroupInfoDialogOpen(false)}
+          group={selectedGroup}
+          closeAllDialog={closeDialog}
+        />
+      )}
     </div>
   );
 };

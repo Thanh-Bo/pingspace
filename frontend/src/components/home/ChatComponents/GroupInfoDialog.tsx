@@ -217,7 +217,7 @@ const GroupInfoDialog = ({
               <DialogTitle className="flex flex-col items-center gap-2">
                 <Avatar className="w-24 h-24">
                   <AvatarImage
-                    src={group.groupImage || "/pingspace.png"}
+                    src={group.groupImage || "/avatar.png"}
                     className="object-cover"
                   />
                   <div

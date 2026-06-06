@@ -1,7 +1,7 @@
-import PostPage from "../home/PostComponents/PostPage";
+import PostFeed from "../home/PostComponents/PostPage";
 import RightPanel from "../home/PostComponents/RightPanel";
 
-const HomePage = () => {
+const PostPage = () => {
   return (
     <main className="flex-1 h-full">
       <div className="flex h-[calc(100vh-0px)] max-w-[1700px] mx-auto bg-left-panel">
@@ -11,12 +11,11 @@ const HomePage = () => {
           className="w-full md:w-4/6 h-full 
            flex  "
         >
-          <PostPage />
+          <PostFeed />
         </div>
 
         <div
-          className=" md:w-1/6 h-full 
-           flex"
+          className="hidden lg:flex lg:w-1/6 h-full"
         >
           <RightPanel />
         </div>
@@ -25,4 +24,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default PostPage;

@@ -13,7 +13,7 @@ import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser";
 import { app, server } from "./lib/socket.js";
 import path from "path";
-dotenv.config();
+dotenv.config({ path: "./backend/.env" });
 
 const PORT = process.env.PORT || 5000;
 

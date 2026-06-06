@@ -40,7 +40,7 @@ const ChatBubbleAvatar = ({ userToDisplay }: ChatBubbleAvatarProps) => {
     <div>
       <Avatar className="overflow-visible relative" onClick={handleAvatarClick}>
         <AvatarImage
-          src={userToDisplay?.profilePic || "/pingspace.png"}
+          src={userToDisplay?.profilePic || "/avatar.png"}
           className="rounded-full object-cover w-8 h-8"
         />
         <AvatarFallback className="w-8 h-8 ">
