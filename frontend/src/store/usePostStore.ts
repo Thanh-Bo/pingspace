@@ -98,7 +98,7 @@ export const usePostStore = create<PostStore>((set) => ({
     }
   },
 
-  createPost: async (text, img, video) => {
+  createPost: async (text: string, img?: string, video?: string) => {
     set({ isCreatingPost: true });
     const authUser = useAuthStore.getState().authUser;
     if (!authUser) {
@@ -112,7 +112,7 @@ export const usePostStore = create<PostStore>((set) => ({
         img,
         video,
       });
-      set((state) => ({ posts: [data, ...state.posts] }));
+      set((state: PostStore) => ({ posts: [data, ...state.posts] }));
       toast.success("Post created!");
     } catch (error) {
       console.error("Error creating post:", error);
@@ -122,12 +122,12 @@ export const usePostStore = create<PostStore>((set) => ({
     }
   },
 
-  deletePost: async (postId) => {
+  deletePost: async (postId: string) => {
     set({ isDeletingPost: true });
     try {
       await axiosInstance.delete(`/post/${postId}`);
-      set((state) => ({
-        posts: state.posts.filter((p) => p._id !== postId),
+      set((state: PostStore) => ({
+        posts: state.posts.filter((p: Post) => p._id !== postId),
       }));
       toast.success("Post deleted");
     } catch (error) {
@@ -138,13 +138,13 @@ export const usePostStore = create<PostStore>((set) => ({
     }
   },
 
-  likeUnlikePost: async (postId) => {
+  likeUnlikePost: async (postId: string) => {
     set({ isLikingPost: true });
     try {
       const { data } = await axiosInstance.post(`/post/like/${postId}`);
-      set((state) => {
+      set((state: PostStore) => {
         const updateLikes = (arr: Post[]) =>
-          arr.map((post) =>
+          arr.map((post: Post) =>
             post._id === postId ? { ...post, likes: data.updatedLikes } : post
           );
 
@@ -163,15 +163,15 @@ export const usePostStore = create<PostStore>((set) => ({
     }
   },
 
-  commentOnPost: async (postId, text, img) => {
+  commentOnPost: async (postId: string, text: string, img?: string) => {
     set({ isCommentingPost: true });
     try {
       const { data } = await axiosInstance.post(`/post/comment/${postId}`, {
         text,
         img,
       });
-      set((state) => ({
-        posts: state.posts.map((post) => (post._id === postId ? data : post)),
+      set((state: PostStore) => ({
+        posts: state.posts.map((post: Post) => (post._id === postId ? data : post)),
       }));
       toast.success("Comment added");
     } catch (error) {
@@ -182,7 +182,7 @@ export const usePostStore = create<PostStore>((set) => ({
     }
   },
 
-  fetchUserPosts: async (userId) => {
+  fetchUserPosts: async (userId: string) => {
     set({ isFetchingUserPosts: true });
     try {
       const { data } = await axiosInstance.get<Post[]>(`/post/user/${userId}`);
@@ -195,7 +195,7 @@ export const usePostStore = create<PostStore>((set) => ({
     }
   },
 
-  fetchLikedPosts: async (userId) => {
+  fetchLikedPosts: async (userId: string) => {
     set({ isFetchingLikedPosts: true });
     try {
       const { data } = await axiosInstance.get<Post[]>(`/post/likes/${userId}`);
