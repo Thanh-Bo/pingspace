@@ -1,12 +1,12 @@
-# 📱 PINGSPACE - Full Stack Chat Application
+# PINGSPACE - Full Stack Chat Application
 
-## 🎯 Tổng Quan Dự Án
+## Tổng Quan Dự Án
 
 **Pingspace** là một ứng dụng chat thời gian thực được xây dựng bằng Node.js, Express, React, TypeScript với Socket.io cho tính năng real-time.
 
 ---
 
-## 📦 Tech Stack
+## Tech Stack
 
 ### **Backend**
 - **Framework:** Express.js
@@ -35,7 +35,7 @@
 
 ---
 
-## 🗂️ Cấu Trúc Thư Mục
+## Cấu Trúc Thư Mục
 
 ### **Backend Structure** (`backend/`)
 ```
@@ -138,40 +138,40 @@ src/
 
 ---
 
-## 🔑 Chức Năng Chính
+## Chức Năng Chính
 
 ### **1. Authentication**
-- ✅ Đăng ký bằng email/password
-- ✅ Đăng nhập bằng email/password
-- ✅ Đăng nhập Google (Google OAuth 2.0)
-- ✅ JWT token (7 ngày)
-- ✅ Bcrypt password hashing
+- Đăng ký bằng email/password
+- Đăng nhập bằng email/password
+- Đăng nhập Google (Google OAuth 2.0)
+- JWT token (7 ngày)
+- Bcrypt password hashing
 
 ### **2. Chat & Messaging**
-- ✅ Chat 1-1 (Direct Messages)
-- ✅ Group Chat (Tạo nhóm, thêm/xoá thành viên)
-- ✅ Gửi tin nhắn text
-- ✅ Gửi hình ảnh (base64)
-- ✅ Real-time updates (Socket.io)
-- ✅ Online status
+- Chat 1-1 (Direct Messages)
+- Group Chat (Tạo nhóm, thêm/xoá thành viên)
+- Gửi tin nhắn text
+- Gửi hình ảnh (base64)
+- Real-time updates (Socket.io)
+- Online status
 
 ### **3. Social Features**
-- ✅ Tìm kiếm người dùng
-- ✅ Gửi lời mời kết bạn
-- ✅ Danh sách bạn
-- ✅ Tạo bài viết (text + image + video)
-- ✅ Like bài viết
-- ✅ Nhận thông báo
+- Tìm kiếm người dùng
+- Gửi lời mời kết bạn
+- Danh sách bạn
+- Tạo bài viết (text + image + video)
+- Like bài viết
+- Nhận thông báo
 
 ### **4. Profile**
-- ✅ Xem/chỉnh sửa hồ sơ
-- ✅ Thay đổi avatar
-- ✅ Thay đổi cover image
-- ✅ Quản lý thông tin cá nhân
+- Xem/chỉnh sửa hồ sơ
+- Thay đổi avatar
+- Thay đổi cover image
+- Quản lý thông tin cá nhân
 
 ---
 
-## 🚀 Cách Chạy Project
+## Cách Chạy Project
 
 ### **Bước 1: Install Dependencies**
 ```bash
@@ -219,7 +219,7 @@ cd frontend && npm run dev
 
 ---
 
-## 📡 API Routes
+## API Routes
 
 ### **Auth**
 - `POST /api/auth/signup` - Đăng ký
@@ -260,18 +260,18 @@ cd frontend && npm run dev
 
 ---
 
-## 🔐 Security Features
+## Security Features
 
-- ✅ CORS (Cross-Origin Resource Sharing)
-- ✅ Helmet - HTTP headers security
-- ✅ JWT - Token-based authentication
-- ✅ Bcrypt - Password hashing
-- ✅ Cookie - HTTP-only cookies
-- ✅ Environment variables (.env)
+- CORS (Cross-Origin Resource Sharing)
+- Helmet - HTTP headers security
+- JWT - Token-based authentication
+- Bcrypt - Password hashing
+- Cookie - HTTP-only cookies
+- Environment variables (.env)
 
 ---
 
-## 🎨 UI Components
+## UI Components
 
 Sử dụng **Shadcn/ui** components:
 - Button, Input, Textarea
@@ -283,7 +283,7 @@ Sử dụng **Shadcn/ui** components:
 
 ---
 
-## 🔄 Real-time Features (Socket.io)
+## Real-time Features (Socket.io)
 
 **Events:**
 - `connection` - Khi user kết nối
@@ -294,7 +294,7 @@ Sử dụng **Shadcn/ui** components:
 
 ---
 
-## 📝 Environment Variables Cần Thiết
+## Environment Variables Cần Thiết
 
 ```
 # Database
@@ -318,41 +318,40 @@ PORT=5000
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### MongoDB Connection Error
-- ✅ Tạo file `.env` trong `backend/`
-- ✅ Thêm IP whitelist vào MongoDB Atlas
-- ✅ Kiểm tra connection string
+- Tạo file `.env` trong `backend/`
+- Thêm IP whitelist vào MongoDB Atlas
+- Kiểm tra connection string
 
 ### CORS Error
-- ✅ Frontend URL phải trong `origin` array ở `server.js`
-- ✅ Credentials phải set `true`
+- Frontend URL phải trong `origin` array ở `server.js`
+- Credentials phải set `true`
 
 ### Socket.io Not Working
-- ✅ Backend phải export `io` từ `socket.js`
-- ✅ Frontend phải connect đến đúng URL
+- Backend phải export `io` từ `socket.js`
+- Frontend phải connect đến đúng URL
 
 ---
 
-## 💡 Future AI Features (từ README)
+## Future AI Features (từ README)
 
 Dự án có kế hoạch thêm:
-1. 🧠 Smart Chatbot
-2. 📝 Message Summary
-3. 🔍 Smart Search
-4. 🌐 Real-time Translation
-5. 🔒 Smart Message Filtering
-6. 📎 AI File/Link Summarizer
-7. ✍️ AI Writing Assistant
+1. Smart Chatbot
+2. Message Summary
+3. Smart Search
+4. Real-time Translation
+5. Smart Message Filtering
+6. AI File/Link Summarizer
+7. AI Writing Assistant
 
 ---
 
-## 📞 Thông Tin Liên Hệ
+## Thông Tin Liên Hệ
 
 Nếu gặp lỗi hoặc có câu hỏi, hãy kiểm tra:
 1. File `.env` có đúng không
 2. MongoDB connection string
 3. Google OAuth credentials
 4. Network access whitelist
-
